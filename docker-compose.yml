@@ -52,8 +52,9 @@ services:
       - 6379:6379
 
   frontend:
-    build: ./src/frontend
-    image: frontend:1.0.0-SNAPSHOT
+    # build: ./src/frontend
+    # image: frontend:1.0.0-SNAPSHOT
+    image: registry.cn-hangzhou.aliyuncs.com/free_dev/frontend:1.0.0-SNAPSHOT
     container_name: frontend
     #    restart: always
     environment:
@@ -66,8 +67,9 @@ services:
       - "nacos"
 
   cartservice:
-    build: ./src/cartservice
-    image: cartservice:1.0.0-SNAPSHOT
+    # build: ./src/cartservice
+    # image: cartservice:1.0.0-SNAPSHOT
+    image: registry.cn-hangzhou.aliyuncs.com/free_dev/cartservice:1.0.0-SNAPSHOT
     container_name: cartservice
     environment:
       - dubbo.registry.address=nacos://nacos-server:8848
@@ -78,8 +80,9 @@ services:
       - "cart-redis"
 
   checkoutservice:
-    build: ./src/checkoutservice
-    image: checkoutservice:1.0.0-SNAPSHOT
+    # build: ./src/checkoutservice
+    # image: checkoutservice:1.0.0-SNAPSHOT
+    image: registry.cn-hangzhou.aliyuncs.com/free_dev/checkoutservice:1.0.0-SNAPSHOT
     container_name: checkoutservice
     environment:
       - dubbo.registry.address=nacos://nacos-server:8848
@@ -90,8 +93,9 @@ services:
       - "checkout-mysql"
 
   prdoctservice:
-    build: ./src/productservice
-    image: productservice:1.0.0-SNAPSHOT
+    # build: ./src/productservice
+    # image: productservice:1.0.0-SNAPSHOT
+    image: registry.cn-hangzhou.aliyuncs.com/free_dev/productservice:1.0.0-SNAPSHOT
     container_name: productservice
     environment:
       - dubbo.registry.address=nacos://nacos-server:8848
@@ -101,10 +105,10 @@ services:
       - "nacos"
       - "product-mysql"
 
-  loadgenerator:
-    build: ./src/loadgenerator
-    image: registry.cn-shanghai.aliyuncs.com/microservice_demo/loadgenerator:1.0.0-SNAPSHOT
-    container_name: loadgenerator
+  # loadgenerator:
+  #   # build: ./src/loadgenerator
+  #   image: registry.cn-shanghai.aliyuncs.com/microservice_demo/loadgenerator:1.0.0-SNAPSHOT
+  #   container_name: loadgenerator
 
 #  adservice:
 #    build: ./src/adservice

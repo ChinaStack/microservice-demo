@@ -1,7 +1,7 @@
 FROM registry.cn-beijing.aliyuncs.com/edas_unified/jct_dw_8_4_4:0.1
 
 WORKDIR /app
-COPY /cartservice-provider/target/cartservice-provider-1.0.0-SNAPSHOT.jar /app
+COPY /checkoutservice-provider/target/checkoutservice-provider-1.0.0-SNAPSHOT.jar /app
 COPY /start.sh /app
 
 EXPOSE 8080
