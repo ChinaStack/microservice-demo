@@ -15,4 +15,5 @@ COPY /checkoutservice-provider/target/checkoutservice-provider-1.0.0-SNAPSHOT.ja
 COPY /start.sh /app
 
 EXPOSE 8080
+RUN chmod +x /app/start.sh
 CMD ["/app/start.sh"]
