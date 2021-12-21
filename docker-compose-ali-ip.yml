@@ -1,0 +1,78 @@
+version: "3"
+services:
+  nacos-server:
+    image: nacos/nacos-server:latest
+    container_name: nacos-standalone
+    environment:
+      - MODE=standalone
+    ports:
+      - "8848:8848"
+
+  checkout-mysql:
+    image: mysql:5.6
+    ports:
+      - 3306
+    command: [
+      --character-set-server=utf8mb4,
+      --collation-server=utf8mb4_unicode_ci
+    ]
+    environment:
+      MYSQL_ROOT_PASSWORD: checkoutservice
+      MYSQL_DATABASE: checkout
+
+  product-mysql:
+    image: mysql:5.6
+    ports:
+      - 3306
+    command: [
+      --character-set-server=utf8mb4,
+      --collation-server=utf8mb4_unicode_ci
+    ]
+    environment:
+      MYSQL_ROOT_PASSWORD: productservice
+      MYSQL_DATABASE: product
+
+  cart-redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
+
+  frontend:
+    image: registry.cn-shanghai.aliyuncs.com/microservice_demo/frontend:1.0.0-SNAPSHOT
+    container_name: frontend
+    environment:
+      - dubbo.registry.address=nacos://172.16.82.250:8848
+      - spring.cloud.nacos.discovery.server-addr=172.16.82.250:8848
+      - spring.cloud.nacos.config.server-addr=172.16.82.250:8848
+    ports:
+      - "8080:8080"
+
+  cartservice:
+    image: registry.cn-shanghai.aliyuncs.com/microservice_demo/cartservice:1.0.0-SNAPSHOT
+    container_name: cartservice
+    environment:
+      - dubbo.registry.address=nacos://172.16.82.250:8848
+      - spring.cloud.nacos.discovery.server-addr=172.16.82.250:8848
+      - spring.cloud.nacos.config.server-addr=172.16.82.250:8848
+
+  checkoutservice:
+    image: registry.cn-shanghai.aliyuncs.com/microservice_demo/checkoutservice:1.0.0-SNAPSHOT
+    container_name: checkoutservice
+    environment:
+      - dubbo.registry.address=nacos://172.16.82.250:8848
+      - spring.cloud.nacos.discovery.server-addr=172.16.82.250:8848
+      - spring.cloud.nacos.config.server-addr=172.16.82.250:8848
+
+  prdoctservice:
+    image: registry.cn-shanghai.aliyuncs.com/microservice_demo/productservice:1.0.0-SNAPSHOT
+    container_name: productservice
+    environment:
+      - dubbo.registry.address=nacos://172.16.82.250:8848
+      - spring.cloud.nacos.discovery.server-addr=172.16.82.250:8848
+      - spring.cloud.nacos.config.server-addr=172.16.82.250:8848
+    depends_on:
+      - "product-mysql"
+
+  loadgenerator:
+    image: registry.cn-shanghai.aliyuncs.com/microservice_demo/loadgenerator:1.0.0-SNAPSHOT
+    container_name: loadgenerator

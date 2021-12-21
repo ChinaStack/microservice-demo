@@ -1,7 +1,7 @@
 version: "3"
 services:
   nacos:
-    hostname: nacos
+    hostname: nacos-server
     image: nacos/nacos-server:latest
     container_name: nacos-standalone
     environment:
@@ -52,7 +52,7 @@ services:
       - 6379:6379
 
   frontend:
-    build: ./src/frontend
+    # build: ./src/frontend
     image: registry.cn-shanghai.aliyuncs.com/microservice_demo/frontend:1.0.0-SNAPSHOT
     container_name: frontend
     #    restart: always
@@ -66,7 +66,7 @@ services:
       - "nacos"
 
   cartservice:
-    build: ./src/cartservice
+    # build: ./src/cartservice
     image: registry.cn-shanghai.aliyuncs.com/microservice_demo/cartservice:1.0.0-SNAPSHOT
     container_name: cartservice
     environment:
@@ -78,7 +78,7 @@ services:
       - "cart-redis"
 
   checkoutservice:
-    build: ./src/checkoutservice
+    # build: ./src/checkoutservice
     image: registry.cn-shanghai.aliyuncs.com/microservice_demo/checkoutservice:1.0.0-SNAPSHOT
     container_name: checkoutservice
     environment:
@@ -90,7 +90,7 @@ services:
       - "checkout-mysql"
 
   prdoctservice:
-    build: ./src/productservice
+    # build: ./src/productservice
     image: registry.cn-shanghai.aliyuncs.com/microservice_demo/productservice:1.0.0-SNAPSHOT
     container_name: productservice
     environment:
@@ -102,7 +102,7 @@ services:
       - "product-mysql"
 
   loadgenerator:
-    build: ./src/loadgenerator
+    # build: ./src/loadgenerator
     image: registry.cn-shanghai.aliyuncs.com/microservice_demo/loadgenerator:1.0.0-SNAPSHOT
     container_name: loadgenerator
 #  adservice:
